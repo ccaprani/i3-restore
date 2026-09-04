@@ -1,0 +1,11 @@
+[Unit]
+Description=Archive i3 and Kitty recovery state every 10 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=10min
+AccuracySec=30s
+Unit=i3-rolling-recovery.service
+
+[Install]
+WantedBy=timers.target

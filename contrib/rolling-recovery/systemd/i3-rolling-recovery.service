@@ -1,0 +1,10 @@
+[Unit]
+Description=Archive i3 workspaces and Kitty pane layouts
+
+[Service]
+Type=oneshot
+Environment=I3_RECOVERY_STATE_ROOT=%h/.local/state/i3-rolling-recovery
+Environment=I3_RECOVERY_KEEP_SNAPSHOTS=1008
+ExecStart=%h/.local/lib/i3-rolling-recovery/snapshot-session.sh
+TimeoutStartSec=3min
+Nice=10

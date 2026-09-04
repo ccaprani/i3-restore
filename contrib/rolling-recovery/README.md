@@ -20,7 +20,7 @@ foreground commands are removed from restored Kitty session files.
 
 ```bash
 install -d ~/.local/lib/i3-rolling-recovery ~/.config/systemd/user ~/.local/bin
-install -m 755 contrib/rolling-recovery/{save-session.py,snapshot-session.sh,recover-session.sh} \
+install -m 755 contrib/rolling-recovery/{save-session.py,snapshot-session.sh,recover-session.sh,recover-pi-session.sh} \
   ~/.local/lib/i3-rolling-recovery/
 install -m 644 contrib/rolling-recovery/systemd/* ~/.config/systemd/user/
 ln -sfn ~/.local/lib/i3-rolling-recovery/recover-session.sh ~/.local/bin/i3-session-recover
@@ -53,6 +53,15 @@ i3-session-recover workspace 7 20260903-221000
 
 `show` lets you identify the target Kitty tab/pane by working directory and foreground process.
 `kitty` opens a safe copy of its saved tab and pane layout; it does not automatically rerun Pi,
-SSH, or other unsafe foreground processes. A Pi conversation can then be resumed using `pi -r` or
-`pi --session <path>`. `workspace` asks for confirmation because it may duplicate applications
-that are still running.
+SSH, or other unsafe foreground processes. `workspace` asks for confirmation because it may
+duplicate applications that are still running.
+
+For Pi panes, locate and relaunch the latest saved Pi session for each recorded working directory:
+
+```bash
+~/.local/lib/i3-rolling-recovery/recover-pi-session.sh list latest
+~/.local/lib/i3-rolling-recovery/recover-pi-session.sh launch 1 latest
+```
+
+The helper opens the selected saved Pi conversation in a new Kitty OS window. It uses Pi's normal
+session storage at `~/.pi/agent/sessions/`; set `PI_SESSION_ROOT` if it is elsewhere.
